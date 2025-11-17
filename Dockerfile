@@ -4,6 +4,8 @@ WORKDIR /app
 
 COPY package*.json ./
 RUN npm ci
+# Install matching Chromium for the installed Playwright version
+RUN npx playwright install --with-deps chromium
 
 COPY . .
 RUN npm run build
