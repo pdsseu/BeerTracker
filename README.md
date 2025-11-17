@@ -71,6 +71,21 @@ De applicatie genereert:
 1. **Console output**: Gestructureerde tekstuele weergave in de terminal
 2. **HTML bestand**: `results-[timestamp].html` met een mooie tabelweergave
 
+## Deployen op Render (Docker)
+
+1. Zorg dat de repo deze bestanden bevat:
+   - `Dockerfile` (gebruikt Playwright base image, bouwt en start de server)
+   - `.dockerignore`
+2. Push naar GitHub.
+3. Maak op [Render](https://render.com) een **Web Service**:
+   - Source: je GitHub repo (Docker build).
+   - Environment vars: `NODE_ENV=production`, `PORT=3000`, eventueel extra configuratie.
+   - (Optioneel) Persistent Disk toevoegen als je `results.json` wilt bewaren tussen deploys.
+4. Deploy. De service draait de Express server + WebSocket, en dient `public/` uit als frontend.
+5. (Optioneel) Voeg een Render Cron Job toe die `POST /api/scrape` aanroept voor automatische updates.
+
+Hiermee is de webtool bereikbaar via de Render URL met dezelfde functionaliteit als lokaal.
+
 ## Project Structuur
 
 ```
