@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BeerTracker - Prijsvergelijking</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+
+        .controls {
+            padding: 30px;
+            background: #f5f5f5;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .store-select {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .store-select select {
+            min-width: 220px;
+            min-height: 90px;
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid #d0d0e8;
+            background: white;
+            font-size: 1em;
+            outline: none;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .status {
+            padding: 12px 20px;
+            background: white;
+            border-radius: 8px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ccc;
+            animation: pulse 2s infinite;
+        }
+
+        .status-indicator.active {
+            background: #4caf50;
+        }
+
+        .status-indicator.scraping {
+            background: #ff9800;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .product-columns {
+            display: grid;
+            gap: 24px;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        }
+
+        @media (min-width: 1200px) {
+            .product-columns {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .product-column {
+            background: #f9f9ff;
+            border-radius: 12px;
+            border: 1px solid rgba(102, 126, 234, 0.15);
+            display: flex;
+            flex-direction: column;
+            min-height: 100%;
+        }
+
+        .column-header {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.12) 0%, rgba(118, 75, 162, 0.12) 100%);
+            padding: 20px;
+            border-bottom: 1px solid rgba(102, 126, 234, 0.2);
+        }
+
+        .column-header h2 {
+            font-size: 1.35em;
+            color: #3a3a66;
+            margin-bottom: 10px;
+        }
+
+        .column-meta {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9em;
+            color: #5b5b8a;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(102, 126, 234, 0.2);
+            color: #4450c8;
+            padding: 4px 12px;
+            border-radius: 14px;
+            font-weight: 600;
+            font-size: 0.8em;
+            letter-spacing: 0.3px;
+        }
+
+        .column-body {
+            padding: 18px 22px 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .result-card {
+            background: white;
+            border-radius: 14px;
+            padding: 18px 20px;
+            box-shadow: 0 12px 28px rgba(102, 126, 234, 0.12);
+            border: 1px solid rgba(102, 126, 234, 0.15);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .promo-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, #ff5f6d 0%, #ffc371 100%);
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.85em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            box-shadow: 0 6px 18px rgba(255, 95, 109, 0.35);
+        }
+
+        .promo-badge svg {
+            width: 14px;
+            height: 14px;
+            fill: currentColor;
+        }
+
+        .result-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 32px rgba(102, 126, 234, 0.18);
+        }
+
+        .result-card.best-price {
+            border: 2px solid #4caf50;
+            box-shadow: 0 16px 36px rgba(76, 175, 80, 0.2);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .store-name {
+            font-weight: 700;
+            color: #4450c8;
+            letter-spacing: 0.4px;
+        }
+
+        .best-badge {
+            background: #4caf50;
+            color: white;
+            font-size: 0.7em;
+            padding: 4px 9px;
+            border-radius: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+
+        .product-title {
+            font-size: 1.05em;
+            font-weight: 600;
+            color: #2c2c4d;
+            line-height: 1.5;
+        }
+
+        .price-tag {
+            font-size: 1.45em;
+            font-weight: 700;
+            color: #2d8659;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .card-link {
+            color: #4450c8;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .card-link::after {
+            content: '↗';
+            font-size: 0.9em;
+        }
+
+        .card-link:hover {
+            text-decoration: underline;
+        }
+
+        .card-timestamp {
+            color: #888;
+            font-size: 0.85em;
+            white-space: nowrap;
+        }
+
+        .empty-column {
+            padding: 20px;
+            text-align: center;
+            color: #888;
+            font-size: 0.95em;
+            background: rgba(0, 0, 0, 0.02);
+            border-radius: 10px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #888;
+        }
+
+        .empty-state h2 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #667eea;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            background: #4caf50;
+            color: white;
+            border-radius: 4px;
+            font-size: 0.8em;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
+        .store-select {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            min-width: 260px;
+        }
+
+        .store-select label {
+            font-weight: 600;
+            color: #2c2c4d;
+        }
+
+        .store-select select {
+            display: none;
+        }
+
+        .store-select-wrapper {
+            position: relative;
+        }
+
+        .store-select-display {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            min-height: 54px;
+            padding: 10px 16px;
+            background: #ffffff;
+            border: 1px solid #dde3f7;
+            border-radius: 14px;
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.12);
+            cursor: pointer;
+            transition: border 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .store-select-display.open {
+            border-color: #667eea;
+            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.18);
+        }
+
+        .store-select-placeholder {
+            color: #9da8c7;
+            font-size: 0.95em;
+        }
+
+        .store-select-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            flex: 1;
+        }
+
+        .store-select-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: rgba(102, 126, 234, 0.12);
+            color: #4450c8;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .store-select-chip button {
+            border: none;
+            background: transparent;
+            color: inherit;
+            cursor: pointer;
+            font-size: 0.9em;
+            padding: 0;
+            line-height: 1;
+        }
+
+        .store-select-chevron {
+            margin-left: auto;
+            color: #7a84ab;
+            transition: transform 0.2s ease;
+        }
+
+        .store-select-display.open .store-select-chevron {
+            transform: rotate(180deg);
+        }
+
+        .store-select-dropdown {
+            position: absolute;
+            top: calc(100% + 10px);
+            left: 0;
+            right: 0;
+            background: #ffffff;
+            border: 1px solid #dde3f7;
+            border-radius: 14px;
+            box-shadow: 0 15px 35px rgba(43, 53, 126, 0.15);
+            padding: 12px;
+            z-index: 20;
+            display: none;
+        }
+
+        .store-select-dropdown.open {
+            display: block;
+        }
+
+        .store-select-options {
+            max-height: 260px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .store-select-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.15s ease;
+            font-weight: 500;
+        }
+
+        .store-select-option:hover {
+            background: rgba(102, 126, 234, 0.08);
+        }
+
+        .store-select-option input {
+            width: 18px;
+            height: 18px;
+            accent-color: #667eea;
+            cursor: pointer;
+        }
+
+        .store-select-option small {
+            display: block;
+            color: #8d96be;
+            font-size: 0.8em;
+            margin-top: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🍺 BeerTracker</h1>
+            <p>Vind de goedkoopste bierprijzen in jou buurt</p>
+        </div>
+
+        <div class="controls">
+            <div class="button-group">
+                <button id="startBtn" class="btn btn-primary" onclick="startScraping()">
+                    Start Prijsvergelijking
+                </button>
+                <div class="store-select">
+                    <div class="store-select-wrapper" id="storeSelectWrapper">
+                        <div class="store-select-display" id="storeSelectDisplay" tabindex="0" role="button" aria-haspopup="listbox" aria-expanded="false">
+                            <div class="store-select-placeholder" id="storeSelectPlaceholder">Alle winkels</div>
+                            <div class="store-select-chips" id="storeSelectChips"></div>
+                            <span class="store-select-chevron" id="storeSelectChevron">⌄</span>
+                        </div>
+                        <div class="store-select-dropdown" id="storeSelectDropdown">
+                            <div class="store-select-options" id="storeSelectOptions"></div>
+                        </div>
+                    </div>
+                    <select id="storeSelect" multiple hidden>
+                        <option value="all" selected>Alle winkels</option>
+                    </select>
+                </div>
+                <div class="status">
+                    <span class="status-indicator" id="statusIndicator"></span>
+                    <span id="statusText">Klaar</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="content" id="content">
+            <div class="empty-state">
+                <h2>Welkom bij BeerTracker</h2>
+                <p>Klik op "Start Prijsvergelijking" om de prijzen te vergelijken</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let ws = null;
+        let isScraping = false;
+        let storeList = [];
+
+        function connectWebSocket() {
+            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsUrl = `${protocol}//${window.location.host}`;
+            
+            ws = new WebSocket(wsUrl);
+
+            ws.onopen = () => {
+                console.log('WebSocket connected');
+            };
+
+            ws.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                handleWebSocketMessage(data);
+            };
+
+            ws.onerror = (error) => {
+                console.error('WebSocket error:', error);
+            };
+
+            ws.onclose = () => {
+                console.log('WebSocket disconnected, reconnecting...');
+                setTimeout(connectWebSocket, 3000);
+            };
+        }
+
+        function handleWebSocketMessage(data) {
+            switch (data.type) {
+                case 'status':
+                    updateStatus(data.status, data.message);
+                    break;
+                case 'progress':
+                    // Update results immediately when they arrive
+                    if (data.results) {
+                        updateResults(data.results);
+                    }
+                    // Update status message if provided
+                    if (data.message) {
+                        const statusText = document.getElementById('statusText');
+                        if (statusText) {
+                            statusText.textContent = data.message;
+                        }
+                    }
+                    break;
+                case 'complete':
+                    updateStatus('completed', data.message);
+                    updateResults(data.results);
+                    isScraping = false;
+                    document.getElementById('startBtn').disabled = false;
+                    break;
+                case 'error':
+                    updateStatus('error', data.message || 'Er is een fout opgetreden');
+                    isScraping = false;
+                    document.getElementById('startBtn').disabled = false;
+                    break;
+            }
+        }
+
+        function updateStatus(status, message) {
+            const indicator = document.getElementById('statusIndicator');
+            const statusText = document.getElementById('statusText');
+            const startBtn = document.getElementById('startBtn');
+
+            indicator.className = 'status-indicator';
+            
+            if (status === 'started' || status === 'processing') {
+                indicator.classList.add('scraping');
+                statusText.textContent = message || 'Scraping...';
+                startBtn.disabled = true;
+                isScraping = true;
+            } else if (status === 'completed') {
+                indicator.classList.add('active');
+                statusText.textContent = message || 'Voltooid';
+                startBtn.disabled = false;
+                isScraping = false;
+            } else {
+                statusText.textContent = message || 'Klaar';
+                startBtn.disabled = false;
+                isScraping = false;
+            }
+        }
+
+        function getStoreSelectElement() {
+            return document.getElementById('storeSelect');
+        }
+
+        function setOptionSelected(value, selected) {
+            const selectEl = getStoreSelectElement();
+            if (!selectEl) return;
+
+            Array.from(selectEl.options).forEach((option) => {
+                if (option.value === value) {
+                    option.selected = selected;
+                }
+            });
+        }
+
+        function handleStoreSelection(value, isSelected) {
+            const selectEl = getStoreSelectElement();
+            if (!selectEl) return;
+
+            if (value === 'all') {
+                setOptionSelected('all', true);
+                Array.from(selectEl.options).forEach((option) => {
+                    if (option.value !== 'all') {
+                        option.selected = false;
+                    }
+                });
+            } else {
+                setOptionSelected(value, isSelected);
+
+                if (isSelected) {
+                    setOptionSelected('all', false);
+                } else {
+                    const hasAnyOtherSelected = Array.from(selectEl.options).some(
+                        (option) => option.value !== 'all' && option.selected
+                    );
+
+                    if (!hasAnyOtherSelected) {
+                        setOptionSelected('all', true);
+                    }
+                }
+            }
+
+            updateStoreChips();
+            renderStoreOptions();
+        }
+
+        function updateStoreChips() {
+            const selectEl = getStoreSelectElement();
+            const chipsContainer = document.getElementById('storeSelectChips');
+            const placeholder = document.getElementById('storeSelectPlaceholder');
+
+            if (!selectEl || !chipsContainer || !placeholder) {
+                return;
+            }
+
+            chipsContainer.innerHTML = '';
+
+            const allOption = Array.from(selectEl.options).find((option) => option.value === 'all');
+            const isAllSelected = allOption ? allOption.selected : true;
+            const selectedStores = Array.from(selectEl.options).filter(
+                (option) => option.selected && option.value !== 'all'
+            );
+
+            if (isAllSelected || selectedStores.length === 0) {
+                placeholder.textContent = 'Alle winkels';
+                placeholder.style.display = 'block';
+                return;
+            }
+
+            placeholder.style.display = 'none';
+
+            selectedStores.forEach((option) => {
+                const chip = document.createElement('span');
+                chip.className = 'store-select-chip';
+                chip.textContent = option.value;
+
+                const removeBtn = document.createElement('button');
+                removeBtn.type = 'button';
+                removeBtn.setAttribute('aria-label', `Verwijder ${option.value}`);
+                removeBtn.textContent = '×';
+                removeBtn.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    handleStoreSelection(option.value, false);
+                });
+
+                chip.appendChild(removeBtn);
+                chipsContainer.appendChild(chip);
+            });
+        }
+
+        function renderStoreOptions() {
+            const optionsContainer = document.getElementById('storeSelectOptions');
+            const selectEl = getStoreSelectElement();
+
+            if (!optionsContainer || !selectEl) {
+                return;
+            }
+
+            optionsContainer.innerHTML = '';
+
+            const selectedValues = new Set(
+                Array.from(selectEl.options)
+                    .filter((option) => option.selected)
+                    .map((option) => option.value)
+            );
+
+            const createOption = (value, label, description) => {
+                const optionLabel = document.createElement('label');
+                optionLabel.className = 'store-select-option';
+
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.value = value;
+                checkbox.checked = selectedValues.has(value);
+                checkbox.addEventListener('change', () => {
+                    handleStoreSelection(value, checkbox.checked);
+                });
+
+                const textWrapper = document.createElement('div');
+                textWrapper.style.display = 'flex';
+                textWrapper.style.flexDirection = 'column';
+                textWrapper.style.gap = '2px';
+
+                const titleSpan = document.createElement('span');
+                titleSpan.textContent = label;
+
+                textWrapper.appendChild(titleSpan);
+
+                if (description) {
+                    const descriptionText = document.createElement('small');
+                    descriptionText.textContent = description;
+                    textWrapper.appendChild(descriptionText);
+                }
+
+                optionLabel.appendChild(checkbox);
+                optionLabel.appendChild(textWrapper);
+                optionsContainer.appendChild(optionLabel);
+            };
+
+            createOption('all', 'Alle winkels', 'Gebruik alle beschikbare winkels');
+
+            storeList.forEach((store) => {
+                if (store && store.name) {
+                    createOption(store.name, store.name, store.baseUrl || '');
+                }
+            });
+        }
+
+        function toggleStoreDropdown(forceState) {
+            const dropdown = document.getElementById('storeSelectDropdown');
+            const display = document.getElementById('storeSelectDisplay');
+
+            if (!dropdown || !display) {
+                return;
+            }
+
+            const shouldOpen =
+                typeof forceState === 'boolean' ? forceState : !dropdown.classList.contains('open');
+
+            dropdown.classList.toggle('open', shouldOpen);
+            display.classList.toggle('open', shouldOpen);
+            display.setAttribute('aria-expanded', shouldOpen);
+        }
+
+        function initializeStoreSelectUI() {
+            const display = document.getElementById('storeSelectDisplay');
+            if (display) {
+                display.addEventListener('click', () => toggleStoreDropdown());
+                display.addEventListener('keydown', (event) => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        toggleStoreDropdown();
+                    } else if (event.key === 'Escape') {
+                        toggleStoreDropdown(false);
+                    }
+                });
+            }
+
+            document.addEventListener('click', (event) => {
+                const wrapper = document.getElementById('storeSelectWrapper');
+                if (wrapper && !wrapper.contains(event.target)) {
+                    toggleStoreDropdown(false);
+                }
+            });
+        }
+
+
+        function updateResults(results) {
+            const content = document.getElementById('content');
+            
+            if (!results || Object.keys(results).length === 0) {
+                content.innerHTML = '<div class="loading"><div class="spinner"></div><p>Resultaten worden geladen...</p></div>';
+                return;
+            }
+
+            const entries = Object.entries(results);
+
+            if (entries.length === 0) {
+                content.innerHTML = '<div class="empty-state"><h2>Geen resultaten gevonden</h2></div>';
+                return;
+            }
+
+            // Keep original order but ensure consistent column arrangement
+            let html = '<div class="product-columns">';
+
+            entries.forEach(([productName, products]) => {
+                const safeName = escapeHtml(productName);
+                const totalResults = products.length;
+
+                html += `
+                    <div class="product-column">
+                        <div class="column-header">
+                            <h2>🍺 ${safeName}</h2>
+                            <div class="column-meta">
+                                <span class="badge">${totalResults} resultaten</span>
+                            </div>
+                        </div>
+                        <div class="column-body">
+                `;
+
+                if (!products || products.length === 0) {
+                    html += `<div class="empty-column">Geen resultaten gevonden voor deze drank.</div>`;
+                } else {
+                    const bestPrice = products.find(p => p.priceValue !== undefined)?.priceValue ?? null;
+
+                    products.forEach(product => {
+                        const productTitle = product.productName ? escapeHtml(product.productName) : safeName;
+                        const isBestPrice = bestPrice !== null && product.priceValue !== undefined && product.priceValue === bestPrice;
+                        const priceDisplay = product.priceValue
+                            ? `€${product.priceValue.toFixed(2).replace('.', ',')}`
+                            : escapeHtml(product.price || 'Onbekend');
+                        const linkHtml = product.link
+                            ? `<a href="${escapeHtml(product.link)}" target="_blank" class="card-link">Bekijk product</a>`
+                            : '<span class="card-link">Geen link</span>';
+                        const timestamp = product.timestamp
+                            ? new Date(product.timestamp).toLocaleTimeString('nl-BE')
+                            : '';
+                        const promoHtml = product.promoTag
+                            ? `<div class="promo-badge" title="Promotie">${escapeHtml(product.promoTag)}</div>`
+                            : '';
+
+                        html += `
+                            <div class="result-card ${isBestPrice ? 'best-price' : ''}">
+                                <div class="card-header">
+                                    <span class="store-name">${escapeHtml(product.supermarket)}</span>
+                                    ${isBestPrice ? '<span class="best-badge">Beste prijs</span>' : ''}
+                                </div>
+                                <div class="product-title">${productTitle}</div>
+                                ${promoHtml}
+                                <div class="price-tag">${priceDisplay}</div>
+                                <div class="card-footer">
+                                    ${linkHtml}
+                                    <span class="card-timestamp">${timestamp}</span>
+                                </div>
+                            </div>
+                        `;
+                    });
+                }
+
+                html += `
+                        </div>
+                    </div>
+                `;
+            });
+
+            html += '</div>';
+
+            content.innerHTML = html;
+        }
+
+        async function startScraping() {
+            if (isScraping) return;
+
+            try {
+                const storeSelectEl = document.getElementById('storeSelect');
+                let selectedStores = [];
+                if (storeSelectEl) {
+                    const options = Array.from(storeSelectEl.selectedOptions || []);
+                    selectedStores = options.map((opt) => opt.value);
+                }
+
+                const payloadStores = selectedStores.includes('all') || selectedStores.length === 0
+                    ? []
+                    : selectedStores;
+
+                const response = await fetch('/api/scrape', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(
+                        payloadStores.length > 0 ? { stores: payloadStores } : {}
+                    ),
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to start scraping');
+                }
+
+                updateStatus('started', 'Scraping gestart...');
+                document.getElementById('content').innerHTML = '<div class="loading"><div class="spinner"></div><p>Resultaten worden verzameld...</p></div>';
+            } catch (error) {
+                console.error('Error starting scrape:', error);
+                updateStatus('error', 'Kon scraping niet starten');
+            }
+        }
+
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;',
+            };
+            return String(text).replace(/[&<>"']/g, (m) => map[m]);
+        }
+
+        // Connect WebSocket on page load
+        connectWebSocket();
+
+        // Handle store selector logic (keep "Alle winkels" mutually exclusive)
+        const storeSelectElement = document.getElementById('storeSelect');
+        if (storeSelectElement) {
+            storeSelectElement.addEventListener('change', () => {
+                const selected = Array.from(storeSelectElement.selectedOptions).map((opt) => opt.value);
+                const allOption = Array.from(storeSelectElement.options).find((opt) => opt.value === 'all');
+
+                if (selected.includes('all') && selected.length > 1) {
+                    // Keep only "all"
+                    Array.from(storeSelectElement.options).forEach((opt) => {
+                        opt.selected = opt.value === 'all';
+                    });
+                } else if (!selected.includes('all') && allOption?.selected) {
+                    allOption.selected = false;
+                }
+            });
+        }
+
+        // Load stores into dropdown
+        async function loadStores() {
+            try {
+                const storesRes = await fetch('/api/stores');
+                const stores = await storesRes.json();
+                
+                // Store the list for rendering
+                storeList = stores;
+                
+                const storeSelect = document.getElementById('storeSelect');
+                if (storeSelect) {
+                    // Keep "Alle winkels" option
+                    const allOption = storeSelect.querySelector('option[value="all"]');
+                    storeSelect.innerHTML = '';
+                    if (allOption) {
+                        storeSelect.appendChild(allOption);
+                    }
+                    
+                    // Add all stores from config
+                    stores.forEach(store => {
+                        const option = document.createElement('option');
+                        option.value = store.name;
+                        option.textContent = store.name;
+                        if (store.enabled) {
+                            option.selected = true;
+                        }
+                        storeSelect.appendChild(option);
+                    });
+                }
+                
+                // Update the UI dropdown
+                updateStoreChips();
+                renderStoreOptions();
+            } catch (error) {
+                console.error('Error loading stores:', error);
+            }
+        }
+
+        // Load saved results and check initial status on page load
+        async function loadInitialData() {
+            try {
+                // Load stores first
+                await loadStores();
+                
+                const statusRes = await fetch('/api/status');
+                const statusData = await statusRes.json();
+                
+                if (statusData.isScraping) {
+                    updateStatus('scraping', 'Scraping bezig...');
+                }
+                
+                // Always load results (saved or current)
+                const resultsRes = await fetch('/api/results');
+                const resultsData = await resultsRes.json();
+                
+                if (resultsData.results && Object.keys(resultsData.results).length > 0) {
+                    updateResults(resultsData.results);
+                    if (resultsData.lastUpdated) {
+                        const lastUpdate = new Date(resultsData.lastUpdated);
+                        const statusText = document.getElementById('statusText');
+                        if (statusText && !statusData.isScraping) {
+                            statusText.textContent = `Laatst bijgewerkt: ${lastUpdate.toLocaleString('nl-BE')}`;
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading initial data:', error);
+            }
+        }
+
+        initializeStoreSelectUI();
+        // Load data when page loads
+        loadInitialData();
+    </script>
+</body>
+</html>
+
+

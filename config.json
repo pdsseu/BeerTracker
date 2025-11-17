@@ -1,0 +1,138 @@
+{
+  "supermarkets": [
+    {
+      "name": "Delhaize",
+      "baseUrl": "https://www.delhaize.be",
+      "enabled": true
+    },
+    {
+      "name": "Colruyt",
+      "baseUrl": "https://www.colruyt.be",
+      "enabled": true
+    },
+    {
+      "name": "Babylon Drinks",
+      "baseUrl": "https://babylondrinks.be",
+      "enabled": true
+    },
+    {
+      "name": "Prik&Tik",
+      "baseUrl": "https://www.prikentik.be",
+      "enabled": true
+    },
+    {
+      "name": "Carrefour",
+      "baseUrl": "https://www.carrefour.be",
+      "enabled": true
+    }
+  ],
+  "products": [
+    {
+      "name": "Stella Artois",
+      "searchTerms": [
+        "stella artois",
+        "stella artois bak"
+      ],
+      "requiredKeywords": [
+        "stella"
+      ],
+      "mustContain": [
+        "fles","bak","vol","24x25cl","24x33cl","krat"
+      ],
+      "preferredKeywords": [
+        "24",
+        "25cl"
+      ],
+      "storeOverrides": {
+        "Babylon Drinks": {
+          "searchTerms": [
+            "stella artois krat",
+            "stella krat",
+            "stella artois"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Cristal",
+      "searchTerms": [
+        "cristal",
+        "cristal bak"
+      ],
+      "requiredKeywords": [
+        "cristal"
+      ],
+      "mustContain": [
+        "fles","bak","vol","24x25cl","24x33cl","krat"
+      ],
+      "preferredKeywords": [
+        "24",
+        "25cl"
+      ]
+    },
+    {
+      "name": "Jupiler",
+      "searchTerms": [
+        "jupiler",
+        "jupiler bak"
+      ],
+      "requiredKeywords": [
+        "jupiler"
+      ],
+      "mustContain": [
+        "fles","bak","vol","24x25cl","24x33cl","krat"
+      ],
+      "preferredKeywords": [
+        "24",
+        "25cl"
+      ],
+      "storeOverrides": {
+        "Babylon Drinks": {
+          "searchTerms": [
+            "jupiler krat",
+            "jupiler 24x25cl",
+            "jupiler"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Maes",
+      "searchTerms": [
+        "maes",
+        "maes bak"
+      ],
+      "requiredKeywords": [
+        "maes"
+      ],
+      "mustContain": [
+        "fles","bak","pils","24x25cl","24x33cl","krat"
+      ],
+      "preferredKeywords": [
+        "24",
+        "25cl"
+      ],
+      "storeOverrides": {
+        "Babylon Drinks": {
+          "searchTerms": [
+            "maes 24x25cl",
+            "maes krat",
+            "maes"
+          ],
+          "mustContain": [
+            "24x25cl"
+          ]
+        }
+      }
+    }
+  ],
+  "scraping": {
+    "headless": true,
+    "timeout": 30000,
+    "waitAfterPageLoad": 2000,
+    "randomDelayMin": 500,
+    "randomDelayMax": 2000,
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    "excludeAlcoholFree": true
+  }
+}
