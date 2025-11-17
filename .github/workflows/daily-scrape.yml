@@ -1,0 +1,15 @@
+name: Daily Scrape
+
+on:
+  schedule:
+    - cron: "0 8 * * *"
+  workflow_dispatch:
+
+jobs:
+  call-scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Render scrape
+        run: |
+          curl -X POST https://beertracker.onrender.com/api/scrape
+
