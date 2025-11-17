@@ -84,30 +84,51 @@ export class DelhaizeScraper extends BaseScraper {
       await DebugHelper.dumpHTML(this.page, 'delhaize-all-beers');
     }
 
-    // Wait for search results (optimized - shorter timeout)
+    const productSelector = '[data-testid="product-block"]';
+
+    // Wait for initial batch of products
     await this.page
-      .waitForSelector('[data-testid="product-block"]', {
-        timeout: 8000, // Reduced from 15000ms
+      .waitForSelector(productSelector, {
+        timeout: 10000,
       })
       .catch(() => {
         Logger.warn('Product blocks not found, page might still be loading...');
       });
 
-    // Additional wait for dynamic content (optimized - reduced delay)
-    await new Promise((resolve) => setTimeout(resolve, 1000)); // Reduced from 3000ms
+    // Aggressively scroll and wait for lazy-loaded products (Render needs longer)
+    const targetCount = 50; // Expect at least ~60 locally
+    let lastCount = 0;
+    for (let attempt = 0; attempt < 6; attempt++) {
+      await this.page.evaluate(() => {
+        const step = document.body.scrollHeight / 4;
+        window.scrollTo({ top: step, behavior: 'smooth' });
+      });
+      await new Promise((resolve) => setTimeout(resolve, 800 + attempt * 200));
+      await this.page.evaluate(() => {
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+      });
+      await new Promise((resolve) => setTimeout(resolve, 1200 + attempt * 300));
 
-    // Scroll to load more products (lazy loading) - optimized faster scrolling
-    await this.page.evaluate(() => {
-      window.scrollTo(0, document.body.scrollHeight / 2);
-    });
-    await new Promise((resolve) => setTimeout(resolve, 800)); // Reduced from 2000ms
-    await this.page.evaluate(() => {
-      window.scrollTo(0, document.body.scrollHeight);
-    });
-    await new Promise((resolve) => setTimeout(resolve, 800)); // Reduced from 2000ms
+      const count = await this.page.$$eval(productSelector, (els) => els.length);
+      Logger.info(`Delhaize product blocks after attempt ${attempt + 1}: ${count}`);
+
+      if (count >= targetCount) {
+        Logger.info(`Reached target product count (${count} >= ${targetCount}), proceeding`);
+        break;
+      }
+
+      if (count === lastCount && attempt >= 3) {
+        Logger.warn(
+          `Product count stuck at ${count} after ${attempt + 1} attempts, proceeding with what we have`
+        );
+        break;
+      }
+
+      lastCount = count;
+    }
 
     // Find all product blocks
-    const productElements = await this.page.$$('[data-testid="product-block"]');
+    const productElements = await this.page.$$(productSelector);
 
     if (!productElements || productElements.length === 0) {
       Logger.warn('No products found on Delhaize search page');
