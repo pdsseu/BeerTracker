@@ -5,6 +5,7 @@ import { randomUUID } from 'crypto';
 
 /**
  * Save scraping results to Supabase database
+ * Deletes all previous results before inserting new ones (similar to JSON file overwrite behavior)
  */
 export async function saveResults(results: ScrapedProduct[]): Promise<void> {
   const supabase = getSupabaseClient();
@@ -15,6 +16,20 @@ export async function saveResults(results: ScrapedProduct[]): Promise<void> {
   }
 
   try {
+    // Delete all previous results to keep only the latest scraping session
+    // This mimics the JSON file overwrite behavior
+    const { error: deleteError } = await supabase
+      .from('scraped_products')
+      .delete()
+      .neq('id', '00000000-0000-0000-0000-000000000000'); // Matches all rows (dummy UUID that never exists)
+
+    if (deleteError) {
+      Logger.error('Failed to delete old results from Supabase:', deleteError);
+      throw deleteError;
+    }
+
+    Logger.info('Deleted old results from Supabase');
+
     // Generate a unique session ID for this scraping run
     const scrapingSessionId = randomUUID();
     const sessionTimestamp = new Date();
