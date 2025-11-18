@@ -205,11 +205,11 @@ app.post('/api/scrape', async (req, res) => {
       currentResults = allResults;
       const processed = processResults(allResults);
 
-      // Save results to disk
+      // Save results to Supabase
       try {
         await saveResults(allResults);
       } catch (error) {
-        Logger.error('Failed to save results to disk:', error);
+        Logger.error('Failed to save results to Supabase:', error);
       }
 
       broadcast({

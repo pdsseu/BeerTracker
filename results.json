@@ -1,141 +1,86 @@
 {
   "results": [
     {
-      "productName": "Stella Artois Blond Bier | Pils | 5,2% Alc. | Bak",
-      "supermarket": "Delhaize",
+      "productName": "STELLA ARTOIS pils 5,2% bak",
+      "supermarket": "Colruyt",
       "price": "€15,99",
       "priceValue": 15.99,
       "targetProduct": "Stella Artois",
-      "link": "https://www.delhaize.be/nl/shop/Bieren-Alcohol-and-Alcoholvrij/Bieren/Pils-and-Tafelbieren/Blond-Bier-Pils-5-2-Alc-Bak/p/S1975011500195900000",
-      "timestamp": "2025-11-17T12:30:10.945Z",
+      "link": "https://www.colruyt.be/nl/producten/5006",
+      "timestamp": "2025-11-18T09:05:46.951Z",
       "available": true,
-      "imageUrl": "https://static.delhaize.be/medias/sys_master/products/h86/h50/12722658836510.jpg?buildNumber=4242db41aa1420ce17d07a72a061d4fe495bc6c817bf9adca24e0214b0261216&imwidth=300",
-      "promoTag": "2de tegen -50%"
+      "imageUrl": "https://static.colruytgroup.com/images/200x200/std.lang.all/96/09/asset-3379609.jpg",
+      "promoTag": "Laatste dag"
     },
     {
-      "productName": "Stella Artois Blond Bier | Pils | 5,2% Alc. | Bak",
-      "supermarket": "Delhaize",
+      "productName": "STELLA ARTOIS pils 5,2%",
+      "supermarket": "Colruyt",
       "price": "€20,09",
       "priceValue": 20.09,
       "targetProduct": "Stella Artois",
-      "link": "https://www.delhaize.be/nl/shop/Bieren-Alcohol-and-Alcoholvrij/Bieren/Pils-and-Tafelbieren/Blond-Bier-Pils-5-2-Alc-Bak/p/S2023010500670640099",
-      "timestamp": "2025-11-17T12:30:10.958Z",
+      "link": "https://www.colruyt.be/nl/producten/31238",
+      "timestamp": "2025-11-18T09:05:46.952Z",
       "available": true,
-      "imageUrl": "https://static.delhaize.be/medias/sys_master/products/h6e/hd7/12679270957086.jpg?buildNumber=4242db41aa1420ce17d07a72a061d4fe495bc6c817bf9adca24e0214b0261216&imwidth=300",
-      "promoTag": "2de tegen -50%"
+      "imageUrl": "https://static.colruytgroup.com/images/200x200/std.lang.all/00/32/asset-3210032.jpg",
+      "promoTag": "Laatste dag"
     },
     {
-      "productName": "Stella Artois Blond Bier | Pils | 5,2% Alc. | Fles",
-      "supermarket": "Delhaize",
-      "price": "€4,79",
-      "priceValue": 4.79,
-      "targetProduct": "Stella Artois",
-      "link": "https://www.delhaize.be/nl/shop/Bieren-Alcohol-and-Alcoholvrij/Bieren/Pils-and-Tafelbieren/Blond-Bier-Pils-5-2-Alc-Fles/p/S2019070400273930099",
-      "timestamp": "2025-11-17T12:30:10.959Z",
-      "available": true,
-      "imageUrl": "https://static.delhaize.be/medias/sys_master/products/h2e/heb/12720799809566.jpg?buildNumber=4242db41aa1420ce17d07a72a061d4fe495bc6c817bf9adca24e0214b0261216&imwidth=300"
-    },
-    {
-      "productName": "Cristal Bier | Blond | Pils | 5% | Fles",
-      "supermarket": "Delhaize",
+      "productName": "CRISTAL ALKEN pils 5.0%vol",
+      "supermarket": "Colruyt",
       "price": "€15,39",
       "priceValue": 15.39,
       "targetProduct": "Cristal",
-      "link": "https://www.delhaize.be/nl/shop/Bieren-Alcohol-and-Alcoholvrij/Bieren/Pils-and-Tafelbieren/Bier-Blond-Pils-5-Fles/p/S2017051204151080099",
-      "timestamp": "2025-11-17T12:30:10.976Z",
+      "link": "https://www.colruyt.be/nl/producten/5021",
+      "timestamp": "2025-11-18T09:05:46.958Z",
       "available": true,
-      "imageUrl": "https://static.delhaize.be/medias/sys_master/products/h2b/h9e/13079749591070.jpg?buildNumber=4242db41aa1420ce17d07a72a061d4fe495bc6c817bf9adca24e0214b0261216&imwidth=300"
+      "imageUrl": "https://static.colruytgroup.com/images/200x200/std.lang.all/96/10/asset-3379610.jpg"
     },
     {
-      "productName": "Cristal Pils | 5,2% | Fles",
-      "supermarket": "Delhaize",
-      "price": "€8,83",
-      "priceValue": 8.83,
-      "targetProduct": "Cristal",
-      "link": "https://www.delhaize.be/nl/shop/Bieren-Alcohol-and-Alcoholvrij/Bieren/Pils-and-Tafelbieren/Pils-5-2-Fles/p/S2025032000832380099",
-      "timestamp": "2025-11-17T12:30:11.009Z",
-      "available": true,
-      "imageUrl": "https://static.delhaize.be/medias/sys_master/products/hf8/hd5/13103959244830.jpg?buildNumber=4242db41aa1420ce17d07a72a061d4fe495bc6c817bf9adca24e0214b0261216&imwidth=300"
-    },
-    {
-      "productName": "Jupiler Blond Bier | Pils | 5,2% alc. | Jumbo | Bak",
-      "supermarket": "Delhaize",
-      "price": "€18,99",
-      "priceValue": 18.99,
+      "productName": "JUPILER pils 5,2% bak",
+      "supermarket": "Colruyt",
+      "price": "€15,49",
+      "priceValue": 15.49,
       "targetProduct": "Jupiler",
-      "link": "https://www.delhaize.be/nl/shop/Bieren-Alcohol-and-Alcoholvrij/Bieren/Pils-and-Tafelbieren/Blond-Bier-Pils-5-2-alc-Jumbo-Bak/p/S2002070900195850000",
-      "timestamp": "2025-11-17T12:30:11.020Z",
+      "link": "https://www.colruyt.be/nl/producten/5030",
+      "timestamp": "2025-11-18T09:05:46.960Z",
       "available": true,
-      "imageUrl": "https://static.delhaize.be/medias/sys_master/products/h68/hfe/12736820215838.jpg?buildNumber=4242db41aa1420ce17d07a72a061d4fe495bc6c817bf9adca24e0214b0261216&imwidth=300",
-      "promoTag": "2de tegen -50%"
+      "imageUrl": "https://static.colruytgroup.com/images/200x200/std.lang.all/91/04/asset-3159104.jpg"
     },
     {
-      "productName": "Jupiler Blond Bier | Pils | 5,2% alc. | Bak",
-      "supermarket": "Delhaize",
-      "price": "€15,55",
-      "priceValue": 15.55,
+      "productName": "JUPILER Pils 5,2% bak",
+      "supermarket": "Colruyt",
+      "price": "€18,96",
+      "priceValue": 18.96,
       "targetProduct": "Jupiler",
-      "link": "https://www.delhaize.be/nl/shop/Bieren-Alcohol-and-Alcoholvrij/Bieren/Pils-and-Tafelbieren/Blond-Bier-Pils-5-2-alc-Bak/p/S1995053000195820000",
-      "timestamp": "2025-11-17T12:30:11.020Z",
+      "link": "https://www.colruyt.be/nl/producten/5037",
+      "timestamp": "2025-11-18T09:05:46.961Z",
       "available": true,
-      "imageUrl": "https://static.delhaize.be/medias/sys_master/products/h4d/hd9/12736811302942.jpg?buildNumber=4242db41aa1420ce17d07a72a061d4fe495bc6c817bf9adca24e0214b0261216&imwidth=300"
+      "imageUrl": "https://static.colruytgroup.com/images/200x200/std.lang.all/91/93/asset-2999193.jpg",
+      "promoTag": "Laatste dag"
     },
     {
-      "productName": "Jupiler Blond Bier | Pils | 5,2% alc. | Fles",
-      "supermarket": "Delhaize",
-      "price": "€4,25",
-      "priceValue": 4.25,
-      "targetProduct": "Jupiler",
-      "link": "https://www.delhaize.be/nl/shop/Bieren-Alcohol-and-Alcoholvrij/Bieren/Pils-and-Tafelbieren/Blond-Bier-Pils-5-2-alc-Fles/p/S2013071600194860000",
-      "timestamp": "2025-11-17T12:30:11.033Z",
-      "available": true,
-      "imageUrl": "https://static.delhaize.be/medias/sys_master/products/hc9/h20/12691193397278.jpg?buildNumber=4242db41aa1420ce17d07a72a061d4fe495bc6c817bf9adca24e0214b0261216&imwidth=300"
-    },
-    {
-      "productName": "Jupiler Blond Bier | Pils | 5,2% alc. | Fles",
-      "supermarket": "Delhaize",
-      "price": "€8,69",
-      "priceValue": 8.69,
-      "targetProduct": "Jupiler",
-      "link": "https://www.delhaize.be/nl/shop/Bieren-Alcohol-and-Alcoholvrij/Bieren/Pils-and-Tafelbieren/Blond-Bier-Pils-5-2-alc-Fles/p/S2022032400615540099",
-      "timestamp": "2025-11-17T12:30:11.042Z",
-      "available": true,
-      "imageUrl": "https://static.delhaize.be/medias/sys_master/products/hbf/h0b/12720730013726.jpg?buildNumber=4242db41aa1420ce17d07a72a061d4fe495bc6c817bf9adca24e0214b0261216&imwidth=300"
-    },
-    {
-      "productName": "Maes Blond bier | Pils | 5,2% ALC. | Bak",
-      "supermarket": "Delhaize",
+      "productName": "MAES pils 5,2% bak",
+      "supermarket": "Colruyt",
       "price": "€15,19",
       "priceValue": 15.19,
       "targetProduct": "Maes",
-      "link": "https://www.delhaize.be/nl/shop/Bieren-Alcohol-and-Alcoholvrij/Bieren/Pils-and-Tafelbieren/Blond-bier-Pils-5-2-ALC-Bak/p/S1975101700195880000",
-      "timestamp": "2025-11-17T12:30:11.063Z",
+      "link": "https://www.colruyt.be/nl/producten/5016",
+      "timestamp": "2025-11-18T09:05:46.971Z",
       "available": true,
-      "imageUrl": "https://static.delhaize.be/medias/sys_master/products/hd6/h0d/12675505684510.jpg?buildNumber=4242db41aa1420ce17d07a72a061d4fe495bc6c817bf9adca24e0214b0261216&imwidth=300"
+      "imageUrl": "https://static.colruytgroup.com/images/200x200/std.lang.all/57/63/asset-3245763.jpg"
     },
     {
-      "productName": "Maes Blond bier| Pils| 5.2% ALC| Bak",
-      "supermarket": "Delhaize",
+      "productName": "MAES Pils 5,2% bak",
+      "supermarket": "Colruyt",
       "price": "€18,99",
       "priceValue": 18.99,
       "targetProduct": "Maes",
-      "link": "https://www.delhaize.be/nl/shop/Bieren-Alcohol-and-Alcoholvrij/Bieren/Pils-and-Tafelbieren/Blond-bier-Pils-5-2-ALC-Bak/p/S2025012400821270099",
-      "timestamp": "2025-11-17T12:30:11.085Z",
+      "link": "https://www.colruyt.be/nl/producten/23933",
+      "timestamp": "2025-11-18T09:05:46.972Z",
       "available": true,
-      "imageUrl": "https://static.delhaize.be/medias/sys_master/products/ha2/hba/13041325375518.jpg?buildNumber=4242db41aa1420ce17d07a72a061d4fe495bc6c817bf9adca24e0214b0261216&imwidth=300",
-      "promoTag": "1+1 gratis"
-    },
-    {
-      "productName": "Maes Pils | 5,2% alc",
-      "supermarket": "Delhaize",
-      "price": "€4,99",
-      "priceValue": 4.99,
-      "targetProduct": "Maes",
-      "link": "https://www.delhaize.be/nl/shop/Bieren-Alcohol-and-Alcoholvrij/Bieren/Pils-and-Tafelbieren/Pils-5-2-alc/p/S2025041600849670099",
-      "timestamp": "2025-11-17T12:30:11.085Z",
-      "available": true,
-      "imageUrl": "https://static.delhaize.be/medias/sys_master/products/h16/h70/13172147748894.jpg?buildNumber=4242db41aa1420ce17d07a72a061d4fe495bc6c817bf9adca24e0214b0261216&imwidth=300"
+      "imageUrl": "https://static.colruytgroup.com/images/200x200/std.lang.all/07/58/asset-3790758.jpg",
+      "promoTag": "Laatste dag"
     }
   ],
-  "lastUpdated": "2025-11-17T12:30:11.234Z"
+  "lastUpdated": "2025-11-18T09:05:47.095Z"
 }
